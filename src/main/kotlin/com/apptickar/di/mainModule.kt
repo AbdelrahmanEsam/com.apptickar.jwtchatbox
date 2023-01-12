@@ -1,7 +1,10 @@
 package com.apptickar.di
 
+import com.apptickar.data.sources.MessageDataSource
+import com.apptickar.data.sources.MessageDataSourceImpl
 import com.apptickar.data.sources.MongoUserDataSource
 import com.apptickar.data.sources.UserDataSource
+import com.apptickar.room.RoomController
 import com.apptickar.security.hashing.HashingService
 import com.apptickar.security.hashing.SHA256HashingService
 import com.apptickar.security.token.JWTTokenService
@@ -43,6 +46,13 @@ fun KoinApplication.loadKoin(environment: ApplicationEnvironment) : KoinApplicat
 
         single<HashingService>{
             SHA256HashingService()
+        }
+
+        single<MessageDataSource> {
+            MessageDataSourceImpl(get())
+        }
+        single {
+            RoomController(get())
         }
 
     }

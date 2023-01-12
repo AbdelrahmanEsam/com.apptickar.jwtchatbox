@@ -1,6 +1,4 @@
 package com.apptickar.data.models
 
-import org.bson.codecs.pojo.annotations.BsonId
-import org.bson.types.ObjectId
 
-data class User(val userName : String , val password : String,val salt:String,@BsonId val id : ObjectId = ObjectId())
+data class User(val numberId : String,val userName : String , val password : String,val salt:String,val chatsList : MutableList<String> = mutableListOf())

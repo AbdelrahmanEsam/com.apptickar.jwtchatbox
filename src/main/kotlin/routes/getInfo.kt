@@ -16,7 +16,6 @@ fun Route.getInfo()
              val principal = call.principal<JWTPrincipal>()
              val userId = principal?.getClaim("userId",String::class)
             call.respond(HttpStatusCode.OK,"hello $userId")
-
         }
     }
 }

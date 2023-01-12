@@ -12,6 +12,7 @@ fun main(args: Array<String>): Unit =
 fun Application.module() {
 
      configureKoin()
+    configureSockets()
     configureSerialization()
     configureMonitoring()
     configureSecurity()

@@ -9,7 +9,6 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.ktor.ext.get
 
 
 fun Route.signUp(hashingService: HashingService,dataSource: UserDataSource)
@@ -23,6 +22,8 @@ fun Route.signUp(hashingService: HashingService,dataSource: UserDataSource)
         }
 
 
+
+
         if (request.username.isBlank() || request.password.isBlank())
         {
             call.respond(HttpStatusCode.Conflict)
@@ -30,7 +31,7 @@ fun Route.signUp(hashingService: HashingService,dataSource: UserDataSource)
         }
 
         val saltedHash = hashingService.generateSaltedHash(request.password)
-        val user = User(request.username,saltedHash.hash,saltedHash.salt)
+        val user = User(numberId = request.numberId,request.username,saltedHash.hash,saltedHash.salt)
 
         val isAcknowledged = dataSource.insertNewUser(user)
         if (!isAcknowledged)

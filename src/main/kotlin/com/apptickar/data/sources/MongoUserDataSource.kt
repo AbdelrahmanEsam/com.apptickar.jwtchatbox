@@ -10,7 +10,7 @@ class MongoUserDataSource(private val database : CoroutineDatabase) : UserDataSo
 
     private val users = database.getCollection<User>()
     override suspend fun getUser(username: String): User? {
-        return users.findOne(User::userName eq username)
+        return users.findOne(User::numberId eq username)
     }
 
     override suspend fun insertNewUser(user: User): Boolean {

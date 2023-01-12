@@ -24,7 +24,7 @@ fun Route.signIn(hashingService: HashingService, dataSource: UserDataSource,toke
             return@post
         }
 
-        val user = dataSource.getUser(request.username)
+        val user = dataSource.getUser(request.numberId)
         if (user == null)
         {
             call.respond(HttpStatusCode.Conflict,"incorrect username or password user null")
@@ -39,10 +39,9 @@ fun Route.signIn(hashingService: HashingService, dataSource: UserDataSource,toke
         }
 
 
-        val token = tokenService.generate(tokenConfig, TokenClaim("UserId",user.id.toString()))
+        val token = tokenService.generate(tokenConfig, TokenClaim("UserId",user.numberId))
 
-        call.respond(
-            status = HttpStatusCode.OK,AuthResponse(token))
+        call.respond(status = HttpStatusCode.OK,AuthResponse(token))
 
 
     }
