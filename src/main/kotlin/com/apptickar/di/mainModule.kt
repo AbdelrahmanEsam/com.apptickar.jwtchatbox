@@ -1,19 +1,13 @@
 package com.apptickar.di
 
-import com.apptickar.data.sources.MessageDataSource
-import com.apptickar.data.sources.MessageDataSourceImpl
-import com.apptickar.data.sources.MongoUserDataSource
-import com.apptickar.data.sources.UserDataSource
-import com.apptickar.room.RoomController
+import com.apptickar.data.sources.*
 import com.apptickar.security.hashing.HashingService
 import com.apptickar.security.hashing.SHA256HashingService
 import com.apptickar.security.token.JWTTokenService
 import com.apptickar.security.token.TokenConfig
 import com.apptickar.security.token.TokenService
-import com.typesafe.config.ConfigFactory
 import io.ktor.server.application.*
 import org.koin.core.KoinApplication
-import org.koin.core.scope.get
 import org.koin.dsl.module
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
@@ -28,7 +22,7 @@ fun KoinApplication.loadKoin(environment: ApplicationEnvironment) : KoinApplicat
         }
 
         single<UserDataSource> {
-            MongoUserDataSource(get())
+            UserDataSourceImpl(get())
         }
 
         single<TokenService> {
@@ -48,12 +42,16 @@ fun KoinApplication.loadKoin(environment: ApplicationEnvironment) : KoinApplicat
             SHA256HashingService()
         }
 
-        single<MessageDataSource> {
-            MessageDataSourceImpl(get())
+        single<MessageCollectionDataSource>{
+            MessageCollectionDataSourceImpl(get())
         }
-        single {
-            RoomController(get())
+
+        single<RoomDataSource>{
+            RoomDataSourceImpl(get(),get())
         }
+
+
+
 
     }
     return modules(mainModule)

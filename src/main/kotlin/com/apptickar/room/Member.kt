@@ -1,8 +1,9 @@
 package com.apptickar.room
 import io.ktor.websocket.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Member(
-    val username: String,
-    val sessionId: String,
+    val numberId: String,
     val socket: WebSocketSession
 )
